@@ -1,0 +1,100 @@
+<form (ngSubmit)="save()">
+  <div class="control">
+    <label for="name" class="label">
+      <span class="required">* </span>
+      Name
+    </label>
+    <div class="input">
+      <input type="text" required id="name" autocomplete="off" name="Name" [(ngModel)]="model.name" />
+    </div>
+  </div>
+
+  <div>
+    <button type="button" (click)="addColor()">Add Color</button>
+
+    <ng-container *ngFor="let i = index; let color of model.favoriteColors; trackBy: trackByIndex;">
+      <div class="control">
+        <label for="favorite-color-{{ i }}" class="label">
+          <span class="required">* </span>
+          Favorite Color {{ i + 1 }}
+        </label>
+        <div class="input">
+          <input
+            type="text"
+            required
+            id="favorite-color-{{ i }}"
+            autocomplete="off"
+            name="Favorite Color {{ i + 1 }}"
+            [(ngModel)]="model.favoriteColors[i]"
+          />
+          <button type="button" (click)="removeColor(i)">Remove {{ color || 'Color' }}</button>
+        </div>
+      </div>
+    </ng-container>
+  </div>
+
+  <div>
+    <button type="button" (click)="addJob()">Add Job</button>
+
+    <fieldset *ngFor="let i = index; let job of model.jobs; trackBy: trackByIndex;">
+      <legend>{{ job.name || ('Job' + (i + 1)) }}</legend>
+
+      <div class="control">
+        <label class="label">
+          <input
+            type="checkbox"
+            name="Liked It There {{ i + 1 }}"
+            id="liked-it-there-{{ i }}"
+            [(ngModel)]="job.likedItThere"
+          />
+          Liked It There
+        </label>
+      </div>
+
+      <div class="control">
+        <label for="job-name-{{ i }}" class="label">
+          <span class="required" *ngIf="job.likedItThere">* </span>
+          Job Name
+        </label>
+        <div class="input">
+          <input
+            type="text"
+            id="job-name-{{ i }}"
+            minlength="5"
+            [required]="job.likedItThere"
+            autocomplete="off"
+            name="Job Name {{ i + 1 }}"
+            [(ngModel)]="job.name"
+          />
+        </div>
+      </div>
+
+      <div class="control">
+        <label for="job-position-{{ i }}" class="label">
+          <span class="required">* </span>
+          Job Position
+        </label>
+        <div class="input">
+          <input
+            type="text"
+            required
+            minlength="5"
+            id="job-position-{{ i }}"
+            autocomplete="off"
+            name="Job Position {{ i + 1 }}"
+            [(ngModel)]="job.position"
+          />
+        </div>
+      </div>
+
+      <button type="button" (click)="removeJob(i)">Remove Job</button>
+    </fieldset>
+  </div>
+
+  {{ state }}
+
+  <pre><code>{{ model | json }}</code></pre>
+
+  <pre><code>{{ ngForm.valid | json }}</code></pre>
+
+</form>
