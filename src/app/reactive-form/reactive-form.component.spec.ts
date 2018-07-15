@@ -1,20 +1,22 @@
 import { TestBed, async } from '@angular/core/testing';
-import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { ReactiveFormsModule } from '@angular/forms';
 
-import { AppComponent } from './app.component';
+import { ReactiveFormComponent } from './reactive-form.component';
 
-describe('AppComponent', () => {
+describe('ReactiveFormComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [
-        AppComponent,
+      imports: [
+        ReactiveFormsModule,
       ],
-      schemas: [NO_ERRORS_SCHEMA],
+      declarations: [
+        ReactiveFormComponent,
+      ],
     }).compileComponents();
   }));
 
   it('should create the app', async(() => {
-    const fixture = TestBed.createComponent(AppComponent);
+    const fixture = TestBed.createComponent(ReactiveFormComponent);
     const app = fixture.debugElement.componentInstance;
     expect(app).toBeTruthy();
   }));

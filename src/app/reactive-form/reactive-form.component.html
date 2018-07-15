@@ -1,0 +1,100 @@
+<form [formGroup]="formGroup" (ngSubmit)="save()">
+  <div class="control">
+    <label for="name" class="label">
+      <span class="required">* </span>
+      Name
+    </label>
+    <div class="input">
+      <input
+        type="text"
+        id="name"
+        autocomplete="off"
+        formControlName="name"
+      />
+    </div>
+  </div>
+
+  <div>
+    <button type="button" (click)="addColor()">Add Color</button>
+
+    <ng-container *ngFor="let i = index; let control of favoriteColorsFormArray.controls; trackBy: trackByIndex;">
+      <div class="control">
+        <label for="favorite-color-{{ i }}" class="label">
+          <span class="required">* </span>
+          Favorite Color {{ i + 1 }}
+        </label>
+        <div class="input">
+          <input
+            type="text"
+            id="favorite-color-{{ i }}"
+            autocomplete="off"
+            [formControl]="control"
+          />
+          <button type="button" (click)="removeColor(i)">Remove {{ control.value || 'Color' }}</button>
+        </div>
+      </div>
+    </ng-container>
+  </div>
+
+  <div>
+    <button type="button" (click)="addJob()">Add Job</button>
+
+    <fieldset *ngFor="let i = index; let jobFormGroup of jobsFormArray.controls; trackBy: trackByIndex;">
+      <legend>{{ jobFormGroup.get('name').value || ('Job' + (i + 1)) }}</legend>
+
+      <div [formGroup]="jobFormGroup">
+        <div class="control">
+          <label class="label">
+            <input
+              type="checkbox"
+              id="liked-it-there-{{ i }}"
+              formControlName="likedItThere"
+            />
+            Liked It There
+          </label>
+        </div>
+
+        <div class="control">
+          <label for="job-name-{{ i }}" class="label">
+            <span class="required" *ngIf="jobFormGroup.get('likedItThere').value">* </span>
+            Job Name
+          </label>
+          <div class="input">
+            <input
+              type="text"
+              id="job-name-{{ i }}"
+              autocomplete="off"
+              formControlName="name"
+            />
+          </div>
+        </div>
+
+        <div class="control">
+          <label for="job-position-{{ i }}" class="label">
+            <span class="required">* </span>
+            Job Position
+          </label>
+          <div class="input">
+            <input
+              type="text"
+              required
+              minlength="5"
+              id="job-position-{{ i }}"
+              autocomplete="off"
+              formControlName="position"
+            />
+          </div>
+        </div>
+
+        <button type="button" (click)="removeJob(i)">Remove Job</button>
+      </div>
+    </fieldset>
+  </div>
+
+  {{ state }}
+
+  <pre><code>{{ formGroup.getRawValue() | json }}</code></pre>
+
+  <pre><code>{{ formGroup.valid | json }}</code></pre>
+
+</form>
